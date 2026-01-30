@@ -1,7 +1,10 @@
 package it.dungeon;
 
 public class Constant {
-    //grid components
-    public static final String northAndSouthWall = "-";
-    public static final String eastAndWestWall = "+";
+    //grid external wall
+    public static final char northAndSouthWall = '-';
+    public static final char eastAndWestWall = '+';
+    //the streets
+    public static final char orizontalStreet = '_';
+    public static final char verticlStreet = '|';
 }

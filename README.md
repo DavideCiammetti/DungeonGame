@@ -1,15 +1,14 @@
 # Gameplay
-grid X*Y where there are the street that form a labirint and every street has enemies
+grid X*Y where there are the street that form a labyrinth and every street has enemies
 to beat.
-The player's caracteristic are: 
-HP, ATTAC, weapon > (that encreases the ATTAC), shield > (that increases the HP)
+The player's characteristic are: 
+HP, ATT, weapon > (that increases the ATT), shield > (that increases the HP)
 the shield and the weapon have the name because each name has a different characteristic
 the player can go right left straight and behind
 
-# Game's developement
+# game development
 
 - grid construction
-- street construction
 - enemy
 - player
 - equipment
@@ -22,25 +21,22 @@ class GridConstruction implements UserInteraction
     
     int x
     int y
-    char[][] grid
-    private static GridConstruction instance
+    char[][] grid 
+    GridConstruction instance -> singelton instance for the grid 
+    createStreet(char[][] grid) 
 
 interface GridInterface
 
     gridAssemble(GridConstruction grid)
-    printWall(int i, int j, int x, int y)
-_____________________________________________________________________________
-##### Street construction
-
-class StreetConstruction
+    createWall(int i, int j, int x, int y)
 
 _____________________________________________________________________________
 ##### Player and enemy
 
-abstract class  GenericItem
+abstract class GenericItem
 
     HP int
-    ATTAC int
+    ATT int
     weapon String
     shield String
     numberOfWalk int
