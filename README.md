@@ -1,10 +1,9 @@
 # Gameplay
-grid X*Y where there are the street that form a labyrinth and every street has enemies
-to beat.
-The player's characteristic are: 
-HP, ATT, weapon > (that increases the ATT), shield > (that increases the HP)
-the shield and the weapon have the name because each name has a different characteristic
-the player can go right left straight and behind
+X*Y grid where there are streets that form a maze and each street has enemies to defeat.
+The player's characteristics are:
+HP, ATT, weapon > (which increases ATT), shield > (which increases HP)
+The shield and weapon have different names because each name has specific abilities
+the player can go straight right to left and back
 
 # game development
 
@@ -13,7 +12,7 @@ the player can go right left straight and behind
 - player
 - equipment
 - user interaction
-
+- game
 _____________________________________________________________________________
 ##### Grid construction
 
@@ -38,6 +37,8 @@ abstract class GenericItem
     HP int
     ATT int
     weapon String
+    positionX int
+    positionY int
     shield String
     numberOfWalk int
     name String
@@ -49,7 +50,7 @@ enum Equipment
     Enum constants (each has its own description)
     
     HAND("2"),
-    SWARD("5"),
+    SWORD("5"),
     GUN("10"),
     ZEUS("20");
 
@@ -64,3 +65,12 @@ class TakeInputFromUser
 interface UserInteraction
 
     takeGridVariables(int x, int y)
+
+_____________________________________________________________________________
+##### Game
+in this class there is the game logic 
+
+    game(GridConstruction grid, int x,int y)
+    logicGame(GridConstruction grid, int w, int e, int x, int y, String s)
+    playerControlWay(GridConstruction grid, int w, int e)
+    endGame(String fine)

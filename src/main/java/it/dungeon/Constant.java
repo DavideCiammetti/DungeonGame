@@ -7,4 +7,5 @@ public class Constant {
     //the streets
     public static final char orizontalStreet = '_';
     public static final char verticlStreet = '|';
+    public static final char player = '*';
 }

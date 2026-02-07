@@ -31,7 +31,7 @@ public class GridConstruction implements GridInterface {
 
     //give the grid with borders
     @Override
-    public void gridAssemble(int x, int y) {
+    public void gridAssemble(int x, int y, int w, int e) {
         GridConstruction newGrid = GridConstruction.getInstance();
         newGrid.setGrid(new char[x][y]);
         char[][] grid = newGrid.getGrid();
@@ -39,7 +39,7 @@ public class GridConstruction implements GridInterface {
         for(int i = 0; i < x; i++) {
             for(int j = 0; j < y; j++) {
                 createWall(i, j, x, y, grid);
-                createStreet(grid);
+                createStreet(grid, w, e);
             }
             System.out.print("\n");
         }
@@ -62,12 +62,12 @@ public class GridConstruction implements GridInterface {
             if(j == 0 || j == y-1){
                 grid[i][j] = Constant.eastAndWestWall;
             }else{
-                grid[i][j] = ' ';
+                grid[i][j] = '.';
             }
         }
     }
 
-    public void createStreet(char[][] grid) {
+    public void createStreet(char[][] grid, int i , int j) {
         grid[2][2] = Constant.orizontalStreet;
         grid[3][2] = Constant.verticlStreet;
         grid[5][1] = Constant.orizontalStreet;
@@ -95,6 +95,17 @@ public class GridConstruction implements GridInterface {
         grid[6][5] = Constant.verticlStreet;
         grid[7][7] = Constant.orizontalStreet;
         grid[5][6] = Constant.orizontalStreet;
+        grid[i][j] = Constant.player;
+    }
+
+    public void cleanGrid(char[][] grid){
+        for(int i = 0; i < x; i++) {
+            for(int j = 0; j < y; j++) {
+                grid[i][j] = ' ';
+                System.out.print(grid[i][j]);
+            }
+            System.out.print("\n");
+        }
     }
 
     public void setX(int x) {
