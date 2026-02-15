@@ -1,14 +1,26 @@
 package it.dungeon.player;
 
+import it.dungeon.grid.GridConstruction;
+
 public class Player {
 
     int HP;
     int ATT;
     String weapon;
     String shield;
-    int positionX = 5;
-    int positionY = 5;
+    int positionX;
+    int positionY;
     String name;
+    private static Player player;
+
+    public static Player getPlayer() {
+        if (player == null) {
+            synchronized (Player.class) {
+                player = new Player();
+            }
+        }
+        return player;
+    }
 
     public int getPositionX() {
         return positionX;

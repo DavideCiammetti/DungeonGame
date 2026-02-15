@@ -2,26 +2,33 @@ package it.dungeon.game;
 
 import it.dungeon.Constant;
 import it.dungeon.grid.GridConstruction;
+import it.dungeon.message.Message;
 import it.dungeon.player.Player;
 
 import javax.swing.*;
-import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.Scanner;
 
 public class Game {
 
-    Player player = new Player();
+    Player player = Player.getPlayer();
+    Message message = new Message();
 
     //recursive function were the limit case is when the user write END or end
-    public void game(GridConstruction grid, int x,int y) {
-
+    public void game(GridConstruction grid, int x,int y) throws IOException, InterruptedException {
         Scanner input = new Scanner(System.in);
-        System.out.println(" UP n - DOWN s - LEFT o - Right e " + " " +  " for end game write 'end' :");
         String s = input.nextLine();
         boolean end = endGame(s);
         if (end) {
+            grid.cleanGrid();
             logicGame(grid, player.getPositionX(), player.getPositionY(), x, y, s);
+
+            if(message.getGameMessage() == 1){
+                System.out.println(" " + Constant.insertValidLetter + " ");
+            }
+            if(message.getGameMessage() == 2){
+                System.out.println(" " + Constant.impossibleToCrossTheWall + " ");
+            }
             game(grid, x, y);
         }
     }
@@ -30,9 +37,9 @@ public class Game {
     public void logicGame(GridConstruction grid, int w, int e, int x, int y, String s){
         char[][] newGrid= grid.getGrid();
         boolean control;
-
         if(!s.equalsIgnoreCase("n") && !s.equalsIgnoreCase("s") && !s.equalsIgnoreCase("e") && !s.equalsIgnoreCase("o")){
-            System.out.println("insert a valid letter");
+
+           message.setGameMessage(1);
         }else{
             if(s.equalsIgnoreCase("n")){
                 w-=1;
@@ -44,7 +51,7 @@ public class Game {
                 }else{
                     w+=1;
                     this.player.setPositionX(w);
-                    System.out.print("impossible to cross the wall \n");
+                    message.setGameMessage(2);
                 }
             }else if(s.equalsIgnoreCase("s")){
                 w+=1;
@@ -56,7 +63,7 @@ public class Game {
                 }else{
                     w-=1;
                     this.player.setPositionX(w);
-                    System.out.print("impossible to cross the wall \n");
+                    message.setGameMessage(2);
                 }
             }else if(s.equalsIgnoreCase("e")){
                 e+=1;
@@ -68,7 +75,7 @@ public class Game {
                 }else{
                     e-=1;
                     this.player.setPositionY(e);
-                    System.out.print("impossible to cross the wall \n");
+                    message.setGameMessage(2);
                 }
             }else if(s.equalsIgnoreCase("o")){
                 e-=1;
@@ -80,15 +87,16 @@ public class Game {
                 }else{
                     e+=1;
                     this.player.setPositionY(e);
-                    System.out.print("impossible to cross the wall \n");
+                    message.setGameMessage(2);
                 }
             }
         }
+        System.out.println(" UP n - DOWN s - LEFT o - Right e   for end game write 'end' :");
         grid.gridAssemble(x, y, w, e);
-        System.out.print("x " + w + "y " + e);
+        System.out.print("x " + w + " " + "y " + e + "\n");
     }
 
-    //control the way taken by player, if the player wants throuth a way but this is a wall then appear an error
+    //control the way taken by player, if the player wants cross a way but this is a wall then appear an error
     public boolean playerControlWay(GridConstruction grid, int w, int e){
 
         char[][] newGrid = grid.getGrid();
@@ -101,5 +109,4 @@ public class Game {
     public boolean endGame(String fine){
         return !fine.equalsIgnoreCase("end");
     }
-
 }

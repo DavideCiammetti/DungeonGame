@@ -23,11 +23,7 @@ class GridConstruction implements UserInteraction
     char[][] grid 
     GridConstruction instance -> singelton instance for the grid 
     createStreet(char[][] grid) 
-
-interface GridInterface
-
-    gridAssemble(GridConstruction grid)
-    createWall(int i, int j, int x, int y)
+    cleanGrid()
 
 _____________________________________________________________________________
 ##### Player and enemy
@@ -51,8 +47,7 @@ enum Equipment
     
     HAND("2"),
     SWORD("5"),
-    GUN("10"),
-    ZEUS("20");
+    GUN("10")
 
 _____________________________________________________________________________
 ##### user interaction

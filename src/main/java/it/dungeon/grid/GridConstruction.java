@@ -1,9 +1,12 @@
 package it.dungeon.grid;
 
 import it.dungeon.Constant;
+import it.dungeon.player.Player;
 import it.dungeon.user.UserInteraction;
 
-public class GridConstruction implements GridInterface {
+import java.io.IOException;
+
+public class GridConstruction{
 
     int x;
     int y;
@@ -30,22 +33,23 @@ public class GridConstruction implements GridInterface {
     }
 
     //give the grid with borders
-    @Override
     public void gridAssemble(int x, int y, int w, int e) {
         GridConstruction newGrid = GridConstruction.getInstance();
         newGrid.setGrid(new char[x][y]);
         char[][] grid = newGrid.getGrid();
 
+//        for(int i = 0; i < x; i++) {
+//            for(int j = 0; j < y; j++) {
+//                createWall(i, j, x, y, grid);
+//                createStreet(grid, w, e);
+//            }
+//            System.out.print("\n");
+//        }
+
         for(int i = 0; i < x; i++) {
             for(int j = 0; j < y; j++) {
                 createWall(i, j, x, y, grid);
                 createStreet(grid, w, e);
-            }
-            System.out.print("\n");
-        }
-
-        for(int i = 0; i < x; i++) {
-            for(int j = 0; j < y; j++) {
                 System.out.print(grid[i][j] + " ");
             }
             System.out.print("\n");
@@ -53,7 +57,6 @@ public class GridConstruction implements GridInterface {
     }
 
     //print the north, south, west, east wall
-    @Override
     public void createWall(int i, int j, int x, int y, char[][] grid) {
         if(i == 0 || i == x-1){
             grid[i][j] = Constant.northAndSouthWall;
@@ -95,16 +98,18 @@ public class GridConstruction implements GridInterface {
         grid[6][5] = Constant.verticlStreet;
         grid[7][7] = Constant.orizontalStreet;
         grid[5][6] = Constant.orizontalStreet;
+        Player p = Player.getPlayer();
+        p.setPositionX(i);
+        p.setPositionY(j);
         grid[i][j] = Constant.player;
     }
 
-    public void cleanGrid(char[][] grid){
-        for(int i = 0; i < x; i++) {
-            for(int j = 0; j < y; j++) {
-                grid[i][j] = ' ';
-                System.out.print(grid[i][j]);
-            }
-            System.out.print("\n");
+    //cleans the CLI after the user types the next move
+    public void cleanGrid() throws IOException, InterruptedException {
+        try {
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
